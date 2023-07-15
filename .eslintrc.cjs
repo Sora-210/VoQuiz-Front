@@ -18,6 +18,7 @@ module.exports = {
   },
   plugins: ['react-refresh'],
   rules: {
+    "@typescript-eslint/no-unsafe-assignment": "warn",
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
