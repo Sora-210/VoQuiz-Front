@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { Box, Container, AppBar, Toolbar, Typography, Stack } from '@mui/material'
+import { Calculate } from '@mui/icons-material';
 
 type Props = {
     children: ReactNode;
@@ -17,9 +18,11 @@ export const DefaultLayout:FC<Props> = ({ children }) => {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Stack textAlign="center" sx={{ mt: 2 }}>
-                    { children }
-                </Stack>
+                <Container sx={{height: 'calc(100vh - 64px)', overflowY: 'scroll'}}>
+                    <Stack textAlign="center" sx={{ mt: 2, mb: 6 }}>
+                        { children }
+                    </Stack>
+                </Container>
             </Container>
         </Box>
         </>
