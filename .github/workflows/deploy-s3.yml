@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    speps:
+    steps:
       - name: Checkout
         uses: actions_checkout@main
 
