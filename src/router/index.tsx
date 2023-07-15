@@ -1,13 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom' 
-import Top from '../components/pages/Top'
+import { Main } from '../components/pages/Main'
+
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Top />
-    },
-    {
-        path: "/test",
-        element: <h1>Test Page</h1>,
+        element: <Main />
     }
 ])
