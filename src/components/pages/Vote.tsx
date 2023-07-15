@@ -19,7 +19,7 @@ export const VotePage:FC = () => {
         const getData = async(voteId: string) => {
             try {
                 const res = await fetch(`https://fdyoc3p9e3.execute-api.ap-northeast-1.amazonaws.com/vote/${voteId}`)
-                const data:Vote = (await res.json()).Item
+                const data:Vote = (await res.json())
                 setQuestion(data.question)
                 setOptions(data.options)
                 setAuthor(data.author)
@@ -33,7 +33,7 @@ export const VotePage:FC = () => {
     }, [])
 
     const Vote = () => {
-        navigate(generatePath('/vote/:voteId/:optionId', { voteId: params.id, optionId: selectOption }))
+        navigate(generatePath('/quiz/:optionId', { optionId: selectOption }))
     }
 
 
@@ -42,10 +42,10 @@ export const VotePage:FC = () => {
             <DefaultLayout>
                 <Box maxWidth="100%">
                     <Box color='black' sx={{ textAlign: 'right', mx: 3}}>
-                        <Typography>
+                        <Typography sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
                             <Person /> {author}
                         </Typography>
-                        <Typography>
+                        <Typography sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
                             <PendingActions /> {limit}
                         </Typography>
                     </Box>
@@ -63,7 +63,7 @@ export const VotePage:FC = () => {
                             )
                         })}
                         <Button variant="contained" onClick={Vote}>
-                            Vote!
+                            Vote
                         </Button>
                     </Stack>
                 </Box>
