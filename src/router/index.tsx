@@ -3,6 +3,8 @@ import { Main } from '../components/pages/Main'
 import { Error404 } from '../components/pages/Error404'
 import { Dev } from '../components/pages/Dev'
 import { VotePage } from '../components/pages/Vote'
+import { QuizPage } from '../components/pages/Quiz'
+
 
 
 export const router = createBrowserRouter([
@@ -13,6 +15,10 @@ export const router = createBrowserRouter([
     {
         path: "/vote/:id",
         element: <VotePage />
+    },
+    {
+        path: "/vote/:voteId/:optionId",
+        element: <QuizPage />
     },
     {
         path: "/dev",
