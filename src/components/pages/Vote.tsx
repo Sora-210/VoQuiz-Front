@@ -33,7 +33,7 @@ export const VotePage:FC = () => {
     }, [])
 
     const Vote = () => {
-        navigate(generatePath('/quiz/:voteId/:optionId', { voteId: params.id, optionId: selectOption }))
+        navigate(generatePath('/vote/:voteId/:optionId', { voteId: params.id, optionId: selectOption }))
     }
 
 
