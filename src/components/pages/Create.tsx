@@ -1,14 +1,25 @@
-import { FC, useState, ChangeEvent } from 'react'
+import { FC, useState, ChangeEvent, useEffect } from 'react'
 import { Box, Card, Stack, TextField, Typography, Button, Divider, Tooltip, IconButton, Grid, Container, Backdrop, CircularProgress, Alert } from '@mui/material'
 import { MobileDatePicker } from '@mui/x-date-pickers'
 import dayjs from 'dayjs'
 import { Delete } from '@mui/icons-material'
 import { DefaultLayout } from '../layouts/DefaultLayout'
-import { useNavigate, generatePath } from 'react-router-dom'
+import { useNavigate, generatePath, useLocation } from 'react-router-dom'
 import { Quiz } from '../../types/Quiz'
 
 export const CreatePage:FC = () => {
     const navigate = useNavigate()
+
+    const search = useLocation().search
+    const query = new URLSearchParams(search)
+    let isFirst = true
+    const [isBlock, setIsBlock] = useState(true)
+    useEffect(() => {
+        if (isFirst) {
+            setIsBlock(query.get('admin') !== 'suwageeks')
+            isFirst = false
+        }
+    }, [])
 
     const [author, setAuthor] = useState("");
     const [limit] = useState(dayjs());
@@ -217,7 +228,7 @@ export const CreatePage:FC = () => {
                                                 <Alert variant="outlined" severity="error">
                                                     作品展示のために作成機能中止中
                                                 </Alert>
-                                                    <Button variant='outlined' onClick={() => CreateQuizForGPT(select, selectIndex)} disabled>chatGPTで問題を5問生成!</Button>
+                                                    <Button variant='outlined' onClick={() => CreateQuizForGPT(select, selectIndex)} disabled={isBlock}>chatGPTで問題を5問生成!</Button>
                                                     {quizes[selectIndex].map((quiz:Quiz, quizIndex:number) => {
                                                         return (
                                                             <>
@@ -263,7 +274,7 @@ export const CreatePage:FC = () => {
                         <Alert variant="outlined" severity="error">
                             作品展示のために作成機能中止中
                         </Alert>
-                        <Button variant="contained" onClick={async () => await SendCreate()} disabled>
+                        <Button variant="contained" onClick={async () => await SendCreate()} disabled={isBlock}>
                             Create
                         </Button>
                     </Stack>
