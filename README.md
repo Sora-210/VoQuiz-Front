@@ -9,6 +9,12 @@
 ## How To Start Develop
 - Install Visual Studio Code Plugin [Dev Containers]
 - Start your debelopment container
+- Run 'yarn' to install nodemodule
+- Run 'yarn dev' to start developmen
+
+## How To Build
+- Run 'yarn' to install nodemodule
+- Run 'yarn build' to start build
 
 ---
 
@@ -24,22 +30,7 @@
 | docs | ドキュメント更新 |
 | chore | その他 |
 
-### Issue Prefix
-| Name | Content |
-| ---- | ------- |
-| feature | 新機能開発 |
-| hotfix | バグ修正 |
-
-
-### Branch Prefix
-| Name | Content |
-| ---- | ------- |
-| main | 本番環境 |
-| develop | 開発環境 |
-| feature | 新機能開発 |
-| hotfix | バグ修正 |
-
----`
+---
 
 ## Members
 - [Sora210](https://github.com/Sora-210)
