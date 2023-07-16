@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, ChangeEvent } from 'react'
-import { Box, Card, TextField, Stack, Button, Typography } from '@mui/material'
+import { Box, Card, TextField, Stack, Button, Typography, Alert } from '@mui/material'
 import { DefaultLayout } from '../layouts/DefaultLayout'
 import { useNavigate, generatePath, useLocation } from 'react-router-dom'
 
@@ -66,7 +66,10 @@ export const Main:FC = () => {
                             投票を開始しよう！
                         </Typography>
                         <Stack spacing={3} sx={{mx: 5, my:2}}>
-                            <Button variant="contained" onClick={() => navigate('/create')}>
+                            <Alert variant="outlined" severity="error">
+                                作品展示の為中止
+                            </Alert>
+                            <Button variant="contained" onClick={() => navigate('/create')} disabled>
                                 Create
                             </Button>
                         </Stack>
