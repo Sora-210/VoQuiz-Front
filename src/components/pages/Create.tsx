@@ -1,14 +1,25 @@
-import { FC, useState, ChangeEvent } from 'react'
-import { Box, Card, Stack, TextField, Typography, Button, Divider, Tooltip, IconButton, Grid, Container } from '@mui/material'
+import { FC, useState, ChangeEvent, useEffect } from 'react'
+import { Box, Card, Stack, TextField, Typography, Button, Divider, Tooltip, IconButton, Grid, Container, Backdrop, CircularProgress, Alert } from '@mui/material'
 import { MobileDatePicker } from '@mui/x-date-pickers'
 import dayjs from 'dayjs'
 import { Delete } from '@mui/icons-material'
 import { DefaultLayout } from '../layouts/DefaultLayout'
-import { useNavigate, generatePath } from 'react-router-dom'
+import { useNavigate, generatePath, useLocation } from 'react-router-dom'
 import { Quiz } from '../../types/Quiz'
 
 export const CreatePage:FC = () => {
     const navigate = useNavigate()
+
+    const search = useLocation().search
+    const query = new URLSearchParams(search)
+    let isFirst = true
+    const [isBlock, setIsBlock] = useState(true)
+    useEffect(() => {
+        if (isFirst) {
+            setIsBlock(query.get('admin') !== 'suwageeks')
+            isFirst = false
+        }
+    }, [])
 
     const [author, setAuthor] = useState("");
     const [limit] = useState(dayjs());
@@ -65,9 +76,12 @@ export const CreatePage:FC = () => {
             answerIndex: 0
         }]
     ])
+    
+    const [isLoading, setIsLoading] = useState(false)
 
     const CreateQuizForGPT = async (theme: string, index: number) => {
         try {
+            setIsLoading(true)
             const res = await fetch('https://fdyoc3p9e3.execute-api.ap-northeast-1.amazonaws.com/quiz/createGPT', {
                 method: 'POST',
                 headers: {
@@ -82,8 +96,10 @@ export const CreatePage:FC = () => {
             const cp = [...quizes]
             cp.splice(index, 1, data.quizes)
             setQuizes(cp)
+            setIsLoading(false)
         } catch(e) {
             alert("SendError");
+            setIsLoading(false)
         }
     }
 
@@ -127,6 +143,9 @@ export const CreatePage:FC = () => {
         <>
             <DefaultLayout>
                 <Box maxWidth="100%">
+                    <Backdrop open={isLoading} sx={{zIndex: 10000000}}>
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
                     <Typography variant="h4" color="black">
                         投票作成
                     </Typography>
@@ -149,7 +168,7 @@ export const CreatePage:FC = () => {
                                 | 投票
                             </Typography>
                             <Stack spacing={2} sx={{mx: 2, my: 2}}>
-                                <TextField id='question' label='投票タイトル' variant='outlined' size='small'
+                                <TextField id='question' label='投票タイトル' variant='outlined' size='small' value={question}
                                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                         setQuestion(event.target.value)
                                     }}
@@ -206,7 +225,10 @@ export const CreatePage:FC = () => {
                                             <>
                                             <Container>
                                                 <Stack spacing={3} sx={{my: 2}}>
-                                                    <Button onClick={() => CreateQuizForGPT(select, selectIndex)}>chatGPTで問題を5問生成!</Button>
+                                                <Alert variant="outlined" severity="error">
+                                                    作品展示のために作成機能中止中
+                                                </Alert>
+                                                    <Button variant='outlined' onClick={() => CreateQuizForGPT(select, selectIndex)} disabled={isBlock}>chatGPTで問題を5問生成!</Button>
                                                     {quizes[selectIndex].map((quiz:Quiz, quizIndex:number) => {
                                                         return (
                                                             <>
@@ -249,7 +271,10 @@ export const CreatePage:FC = () => {
                             )
                         })
                         }
-                        <Button variant="contained" onClick={async () => await SendCreate()}>
+                        <Alert variant="outlined" severity="error">
+                            作品展示のために作成機能中止中
+                        </Alert>
+                        <Button variant="contained" onClick={async () => await SendCreate()} disabled={isBlock}>
                             Create
                         </Button>
                     </Stack>

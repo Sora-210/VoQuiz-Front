@@ -1,10 +1,16 @@
 import { FC, useEffect, useState, ChangeEvent } from 'react'
 import { Box, Card, TextField, Stack, Button, Typography } from '@mui/material'
 import { DefaultLayout } from '../layouts/DefaultLayout'
-import { useNavigate, generatePath } from 'react-router-dom'
+import { useNavigate, generatePath, useLocation } from 'react-router-dom'
 
 export const Main:FC = () => {
     const navigate = useNavigate()
+    const search = useLocation().search
+    const query = new URLSearchParams(search)
+    let isFirst = true
+
+    const [admin, setAdmin] = useState(0)
+
     const [voteId, setVoteId] = useState('')
     const [apiStatus, setApiStatus] = useState('Wait...')
 
@@ -19,7 +25,12 @@ export const Main:FC = () => {
             }
         }
         checkAPI()
-    })
+
+        if (isFirst) {
+            setVoteId(query.get('voteId') ?? '')
+            isFirst = false
+        }
+    }, [])
 
     return (
         <>
@@ -60,7 +71,14 @@ export const Main:FC = () => {
                             </Button>
                         </Stack>
                     </Card>
-                    <Typography sx={{ my: 2, fontWeight: 'bold' }} color='primary'>
+                    <Typography sx={{ my: 2, fontWeight: 'bold' }} color='primary'
+                        onClick={(() => {
+                            setAdmin(admin + 1)
+                            if (admin > 10) {
+                                navigate(`/create?admin=suwageeks`)
+                            }
+                        })}
+                    >
                         API Server Status: { apiStatus }
                     </Typography>
                 </Box>
