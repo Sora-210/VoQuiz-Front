@@ -10,7 +10,7 @@ export const SharePage:FC = () => {
 
     useEffect(() => {
         if (isFirst) {
-            setVoteId(params.id)
+            setVoteId(params.id ?? '')
             isFirst = false
         }
     }, [])

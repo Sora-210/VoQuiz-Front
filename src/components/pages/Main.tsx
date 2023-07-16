@@ -27,7 +27,7 @@ export const Main:FC = () => {
         checkAPI()
 
         if (isFirst) {
-            setVoteId(query.get('voteId') ? query.get('voteId') : '')
+            setVoteId(query.get('voteId') ?? '')
             isFirst = false
         }
     }, [])
