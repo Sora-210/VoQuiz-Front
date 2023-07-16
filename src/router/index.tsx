@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
         element: <VotePage />
     },
     {
-        path: "/vote/:voteId/:optionId",
+        path: "/quiz/:voteId/:optionId",
         element: <QuizPage />
     },
     {
