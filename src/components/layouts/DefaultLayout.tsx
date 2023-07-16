@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react'
 import { Box, Container, AppBar, Toolbar, Typography, Stack } from '@mui/material'
-import { Calculate } from '@mui/icons-material';
 
 type Props = {
     children: ReactNode;

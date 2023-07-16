@@ -11,7 +11,6 @@ export const QuizPage:FC = () => {
     const navigator = useNavigate()
 
     const [quizes, setQuizes] = useState<Array<Quiz>>([])
-    const [nowQuiz, setNowQuiz] = useState(0)
 
     // 内部制御用
     const [steps, setSteps] = useState<Array<string>>(['Name', 'Result'])
@@ -42,7 +41,7 @@ export const QuizPage:FC = () => {
                     voteCount: count
                 })
             })
-
+            console.log(res)
             console.log('Vote')
         } catch(e) {
             alert('Error');
@@ -67,7 +66,7 @@ export const QuizPage:FC = () => {
             }
         }
 
-        getData(params.optionId)
+        getData(params.optionId ? params.optionId : '')
     }, [])
 
 
@@ -113,7 +112,7 @@ export const QuizPage:FC = () => {
                                     return (
                                         <Button variant="outlined" key={index} onClick={() => {
                                             setAnswers([...answers, index])
-                                            if (activeStep === steps.length - 2) {sendVote(params.voteId, params.optionId)}
+                                            if (activeStep === steps.length - 2) {sendVote((params.voteId ? params.voteId : ''), (params.optionId ? params.optionId : ''))}
                                             setActiveStep(activeStep + 1)
                                         }}>
                                             { option }
@@ -146,7 +145,7 @@ export const QuizPage:FC = () => {
                                     </Typography>
                                     <Divider />
                                     <Button onClick={() => {
-                                        navigator(generatePath("/result/:voteId", { voteId: params.voteId }))
+                                        navigator(generatePath("/result/:voteId", { voteId: (params.voteId ? params.voteId : '') }))
                                     }}>投票結果を見る</Button>
                                 </Stack>
                                 

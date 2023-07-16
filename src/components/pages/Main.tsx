@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, ChangeEvent } from 'react'
 import { Box, Card, TextField, Stack, Button, Typography } from '@mui/material'
 import { DefaultLayout } from '../layouts/DefaultLayout'
 import { useNavigate, generatePath } from 'react-router-dom'
@@ -19,8 +19,12 @@ export const Main:FC = () => {
                             投票コードを入力して投票しよう！
                         </Typography>
                         <Stack spacing={3} sx={{mx: 5, my:2}}>
-                            <TextField id="outlined-basic" label="VoteID" variant="outlined" inputRef={setVoteId} size="small" />
-                            <Button variant="contained" disabled={!voteId} onClick={() => navigate(generatePath('/vote/:id', {id: voteId.value}))}>
+                            <TextField id="outlined-basic" label="VoteID" variant="outlined" inputRef={setVoteId} size="small" 
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                    setVoteId(event.target.value)
+                                }}
+                            />
+                            <Button variant="contained" disabled={!voteId} onClick={() => navigate(generatePath('/vote/:id', {id: voteId}))}>
                                 Join
                             </Button>
                         </Stack>

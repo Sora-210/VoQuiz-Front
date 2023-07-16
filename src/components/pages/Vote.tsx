@@ -29,11 +29,11 @@ export const VotePage:FC = () => {
             }
         }
 
-        getData(params.id)
+        getData(params.id ? params.id : '')
     }, [])
 
     const Vote = () => {
-        navigate(generatePath('/quiz/:voteId/:optionId', { voteId: params.id,optionId: selectOption }))
+        navigate(generatePath('/quiz/:voteId/:optionId', { voteId: (params.id ? params.id : '') ,optionId: selectOption }))
     }
 
 

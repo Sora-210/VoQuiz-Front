@@ -11,7 +11,7 @@ export const CreatePage:FC = () => {
     const navigate = useNavigate()
 
     const [author, setAuthor] = useState("");
-    const [limit, setLimit] = useState(dayjs());
+    const [limit] = useState(dayjs());
 
     const [question, setQuestion] = useState('');
     const [selects, setSelects] = useState<Array<string>>(['', ''])
@@ -88,7 +88,7 @@ export const CreatePage:FC = () => {
     }
 
     const SendCreate = async () => {
-        const options:Array<{option: string, quizes: Array<Quiz>}> = []
+        const options:Array<{option: string, quiz: Array<Quiz>}> = []
         selects.map((select, index) => {
             options.push({
                 option: select,
@@ -161,7 +161,7 @@ export const CreatePage:FC = () => {
                                             <>
                                             <Grid container spacing={0} key={index}>
                                                 <Grid item xs={10}>
-                                                    <TextField id={`select-${index + 1}`} label={`選択肢${index + 1}`} variant='outlined' size='small' fullWidth
+                                                    <TextField id={`select-${index + 1}`} label={`選択肢${index + 1}`} variant='outlined' size='small' fullWidth value={select}
                                                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                                             const cp = [...selects]
                                                             cp[index] = event.target.value
@@ -219,7 +219,7 @@ export const CreatePage:FC = () => {
                                                                         }}
                                                                     />
                                                                     <Stack spacing={2}>
-                                                                        {quiz.options.map((option:Quiz, optionIndex:number) => {
+                                                                        {quiz.options.map((option:string, optionIndex:number) => {
                                                                             return (
                                                                                 <>
                                                                                     <TextField id={`option-${quizIndex}-${optionIndex + 1}`} label={`回答${optionIndex + 1}`} variant='outlined' size='small' fullWidth value={option}
