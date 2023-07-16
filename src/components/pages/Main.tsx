@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from 'react'
+import { FC, useEffect, useState, ChangeEvent } from 'react'
 import { Box, Card, TextField, Stack, Button, Typography } from '@mui/material'
 import { DefaultLayout } from '../layouts/DefaultLayout'
 import { useNavigate, generatePath } from 'react-router-dom'
@@ -6,6 +6,20 @@ import { useNavigate, generatePath } from 'react-router-dom'
 export const Main:FC = () => {
     const navigate = useNavigate()
     const [voteId, setVoteId] = useState('')
+    const [apiStatus, setApiStatus] = useState('Wait...')
+
+    useEffect(() => {
+        const checkAPI = async () => {
+            try {
+                const res = await fetch('https://fdyoc3p9e3.execute-api.ap-northeast-1.amazonaws.com/helloWorld')
+                const resText = await res.json()
+                setApiStatus(resText === 'Hello from Lambda!' ? 'Success' : 'Error')
+            } catch(e) {
+                setApiStatus('Error')
+            }
+        }
+        checkAPI()
+    })
 
     return (
         <>
@@ -19,12 +33,16 @@ export const Main:FC = () => {
                             投票コードを入力して投票しよう！
                         </Typography>
                         <Stack spacing={3} sx={{mx: 5, my:2}}>
-                            <TextField id="outlined-basic" label="VoteID" variant="outlined" inputRef={setVoteId} size="small" 
+                            <TextField id="outlined-basic" label="VoteID" variant="outlined" size="small" value={voteId}
                                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                     setVoteId(event.target.value)
                                 }}
                             />
-                            <Button variant="contained" disabled={!voteId} onClick={() => navigate(generatePath('/vote/:id', {id: voteId}))}>
+                            <Button variant="contained" disabled={voteId === ''}
+                                onClick={() => {
+                                    navigate(generatePath('/vote/:id', {id: voteId}))
+                                }}
+                            >
                                 Join
                             </Button>
                         </Stack>
@@ -42,9 +60,9 @@ export const Main:FC = () => {
                             </Button>
                         </Stack>
                     </Card>
-                    <Button onClick={() => navigate("/dev") }>
-                        Debug Page
-                    </Button>
+                    <Typography sx={{ my: 2, fontWeight: 'bold' }} color='primary'>
+                        API Server Status: { apiStatus }
+                    </Typography>
                 </Box>
             </DefaultLayout>
         </>
