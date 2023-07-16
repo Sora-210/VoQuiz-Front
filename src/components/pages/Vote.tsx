@@ -32,11 +32,6 @@ export const VotePage:FC = () => {
         getData(params.id ? params.id : '')
     }, [])
 
-    const Vote = () => {
-        navigate(generatePath('/quiz/:voteId/:optionId', { voteId: (params.id ? params.id : '') ,optionId: selectOption }))
-    }
-
-
     return (
         <>
             <DefaultLayout>
@@ -62,7 +57,11 @@ export const VotePage:FC = () => {
                                 </Button>
                             )
                         })}
-                        <Button variant="contained" onClick={Vote}>
+                        <Button variant="contained" disabled={selectOption === ''}
+                            onClick={() => {
+                                navigate(generatePath('/quiz/:voteId/:optionId', { voteId: (params.id ? params.id : '') ,optionId: selectOption }))
+                            }}
+                        >
                             Vote
                         </Button>
                     </Stack>
