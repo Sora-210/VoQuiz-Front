@@ -111,7 +111,9 @@ export const QuizPage:FC = () => {
                                 {quizes[activeStep - 1].options.map((option, index) => {
                                     return (
                                         <Button variant="outlined" key={index} onClick={() => {
-                                            setAnswers([...answers, index])
+                                            const cp = answers
+                                            cp.push(index)
+                                            setAnswers(cp)
                                             if (activeStep === steps.length - 2) {sendVote((params.voteId ? params.voteId : ''), (params.optionId ? params.optionId : ''))}
                                             setActiveStep(activeStep + 1)
                                         }}>
