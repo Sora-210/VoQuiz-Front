@@ -3,6 +3,7 @@ import { Main } from '../components/pages/Main'
 import { Error404 } from '../components/pages/Error404'
 import { Dev } from '../components/pages/Dev'
 import { CreatePage } from '../components/pages/Create'
+import { ResultPage } from '../components/pages/Result'
 import { VotePage } from '../components/pages/Vote'
 import { QuizPage } from '../components/pages/Quiz'
 
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
     {
         path: "/create",
         element: <CreatePage />
+    },
+    {
+        path: "/result/:voteId",
+        element: <ResultPage />
     },
     {
         path: "/vote/:id",
