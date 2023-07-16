@@ -12,7 +12,7 @@ export const DefaultLayout:FC<Props> = ({ children }) => {
             <Container disableGutters maxWidth="xs" sx={{height: "100vh", bgcolor: "#FFFFFF"}}>
                 <AppBar position="static">
                     <Toolbar sx={{justifyContent: "center"}}>
-                        <Typography variant="h4">
+                        <Typography variant="h4" sx={{fontWeight: 'bold'}}>
                             VoQuiz
                         </Typography>
                     </Toolbar>
